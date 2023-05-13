@@ -1,0 +1,5 @@
+package local.rps.grupa_jela_recepta;
+
+public class GrupaJelaReceptaDto {
+
+}

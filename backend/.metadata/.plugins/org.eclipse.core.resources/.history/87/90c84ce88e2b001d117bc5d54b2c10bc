@@ -1,0 +1,14 @@
+package local.rps.korisnik;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Resp {
+
+    private Korisnik result;
+    private String token;
+    
+    
+}

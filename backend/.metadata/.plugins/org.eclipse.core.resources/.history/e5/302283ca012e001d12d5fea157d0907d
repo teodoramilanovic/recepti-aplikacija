@@ -1,0 +1,66 @@
+package local.rps.pracenje;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.korisnik.Korisnik;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class PracenjeController {
+	
+	@Autowired
+	PracenjeService pracenjeService;
+
+	@RequestMapping("/pracenja")
+	public List<Pracenje> getAllPracenja() {
+		return pracenjeService.getAllPracenja();
+	}
+	
+	@RequestMapping("/pracenja/{id}")
+	public Pracenje getPracenjeById(@PathVariable int id) {
+		return pracenjeService.getPracenjeById(id);
+	}
+	
+	@RequestMapping("/pratioci/{id}")
+	public List<Pracenje> getPratiociByKorisnikId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return pracenjeService.getPratiociByKorisnikId(id,header);
+	}
+	
+	@RequestMapping("/prati/{id}")
+	public List<Pracenje> getPratibyKorisnikId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return pracenjeService.getPratiByKorisnikId(id, header);
+	}
+	
+	@RequestMapping("/postojiPracenje/{id}")
+	public boolean postojiPracenje(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return pracenjeService.postojiPracenje(id, header);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/pracenja")
+	public void addPracenje(@RequestBody PracenjeDto p) {
+		Pracenje pracenje = new Pracenje();
+		pracenje.setAktivniKorisnik(new Korisnik(p.getAktivniKorisnikId(), "", "", "", "", "", "", ""));
+		pracenje.setPasivniKorisnik(new Korisnik(p.getPasivniKorisnikId(), "", "", "", "", "", "", ""));
+		pracenjeService.addPracenje(pracenje);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/pracenja")
+	public void updatePracenje(@RequestBody Pracenje pracenje) {
+		pracenjeService.updatePracenje(pracenje);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/pracenja/{id}")
+	public void deletePracenjeById(@PathVariable int id) {
+		pracenjeService.deletePracenjeById(id);
+	}
+
+}

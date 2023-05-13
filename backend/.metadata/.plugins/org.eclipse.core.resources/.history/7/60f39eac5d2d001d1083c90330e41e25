@@ -1,0 +1,5 @@
+package local.rps.tag_recepta;
+
+public class TagReceptaDto {
+
+}

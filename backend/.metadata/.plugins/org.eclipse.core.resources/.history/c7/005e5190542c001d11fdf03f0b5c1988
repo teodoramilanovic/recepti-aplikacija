@@ -1,0 +1,11 @@
+package local.rps.pracenje;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PracenjeRepository extends JpaRepository <Pracenje, Integer> {
+
+	void findByPasivniKorisnikId(int parseInt);
+
+	void findByAktivniKorisnikId(int parseInt);	
+}
+

@@ -1,0 +1,11 @@
+package local.rps.kolekcija;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface KolekcijaRepository extends JpaRepository <Kolekcija, Integer> {
+
+	public List<Kolekcija> findByKorisnikId(int id);	
+}
+

@@ -1,0 +1,76 @@
+package local.rps.grupa_jela_recepta;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import local.rps.grupa_jela.GrupaJela;
+import local.rps.recept.Recept;
+
+@Service
+public class GrupaJelaReceptaService {
+
+	@Autowired
+	GrupaJelaReceptaRepository grupaJelaReceptaRepository;
+
+	public GrupaJelaReceptaService() {
+	}
+
+	public List<GrupaJelaRecepta> getAllGrupeJelaRecepta() {
+		return this.grupaJelaReceptaRepository.findAll();
+	}
+	
+	public GrupaJelaRecepta getGrupaJelaReceptaById(int id) {
+		return this.grupaJelaReceptaRepository.findById(id).get();
+	}
+	
+	public void addGrupaJelaRecepta(GrupaJelaReceptaDto gjr,String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            GrupaJelaRecepta grupaJelaRecepta = new GrupaJelaRecepta();
+    		grupaJelaRecepta.setGrupaJela(new GrupaJela(gjr.getGrupaJelaId(), ""));
+    		grupaJelaRecepta.setRecept(new Recept(gjr.getReceptId(), "", 0, "", 0, null, null, ""));
+            this.grupaJelaReceptaRepository.save(grupaJelaRecepta);
+        }
+	}
+	
+	public void updateGrupaJelaRecepta(GrupaJelaRecepta grupaJelaRecepta) {
+		this.grupaJelaReceptaRepository.save(grupaJelaRecepta);
+	}
+	
+	public void deleteGrupaJelaReceptaById(int id) {
+		GrupaJelaRecepta s = this.getGrupaJelaReceptaById(id);
+		this.grupaJelaReceptaRepository.delete(s);
+	}
+
+	public void deleteGrupaJelaReceptaByReceptId(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            this.grupaJelaReceptaRepository.deleteByReceptId(id);
+        }
+	}
+
+	public List<GrupaJelaRecepta> getGrupaJelaReceptaByGrupaJelaId(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            return this.grupaJelaReceptaRepository.findByGrupaJelaId(id);
+        }
+	}
+
+}

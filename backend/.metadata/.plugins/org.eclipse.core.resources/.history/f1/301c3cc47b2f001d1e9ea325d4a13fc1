@@ -1,0 +1,12 @@
+package local.rps.omiljen_recept;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OmiljenReceptRepository extends JpaRepository <OmiljenRecept, Integer> {	
+	public List<OmiljenRecept> findByReceptId(int id);
+
+	public List<OmiljenRecept> findByKolekcijaId(int id);
+}
+

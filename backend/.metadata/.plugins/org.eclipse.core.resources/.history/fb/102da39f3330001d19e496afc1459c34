@@ -1,0 +1,42 @@
+package local.rps.sastojak;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SastojakService {
+
+	@Autowired
+	SastojakRepository sastojakRepository;
+
+	public SastojakService() {
+	}
+
+	public List<Sastojak> getAllSastojci() {
+		return this.sastojakRepository.findAll();
+	}
+	
+	public Sastojak getSastojakById(int id) {
+		return this.sastojakRepository.findById(id).get();
+	}
+	
+	public Sastojak addSastojak(Sastojak sastojak) {
+		 return this.sastojakRepository.save(sastojak);
+	}
+	
+	public void updateSastojak(Sastojak sastojak) {
+		this.sastojakRepository.save(sastojak);
+	}
+	
+	public void deleteSastojakById(int id) {
+		Sastojak s = this.getSastojakById(id);
+		this.sastojakRepository.delete(s);
+	}
+
+	public List<Sastojak> getAllSastojciByNaziv(String naziv) {
+		return this.sastojakRepository.getAllSastojciByNaziv(naziv);
+	}
+
+}

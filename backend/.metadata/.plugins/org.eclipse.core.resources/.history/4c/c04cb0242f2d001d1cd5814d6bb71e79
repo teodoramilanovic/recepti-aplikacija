@@ -1,0 +1,5 @@
+package local.rps.korisnik;
+
+public class KorisnikDetails {
+
+}

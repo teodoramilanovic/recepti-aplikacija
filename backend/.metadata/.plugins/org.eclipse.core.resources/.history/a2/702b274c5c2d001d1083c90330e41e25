@@ -1,0 +1,5 @@
+package local.rps.sastojak_recepta;
+
+public class SastojakReceptaDto {
+
+}

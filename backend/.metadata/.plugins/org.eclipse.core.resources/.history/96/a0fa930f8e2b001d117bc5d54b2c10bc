@@ -1,0 +1,13 @@
+package com.example.artsbackend.users;
+
+import com.example.artsbackend.users.Users;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Resp {
+
+    private Users result;
+    private String token;
+}

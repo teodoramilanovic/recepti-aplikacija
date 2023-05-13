@@ -1,0 +1,14 @@
+package local.rps.grupa_jela_recepta;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+public interface GrupaJelaReceptaRepository extends JpaRepository <GrupaJelaRecepta, Integer> {
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Grupa_jela_recepta WHERE recept_id=?1")
+	void deleteByReceptId(int id);	
+}

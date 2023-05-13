@@ -1,0 +1,51 @@
+package local.rps.postupak_pripreme;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class PostupakPripremeController {
+	
+	@Autowired
+	PostupakPripremeService postupakPripremeService;
+
+	@RequestMapping("/postupciPripreme")
+	public List<PostupakPripreme> getAllPostupciPripreme() {
+		return postupakPripremeService.getAllPostupciPripreme();
+	}
+	
+	@RequestMapping("/postupciPripreme/{id}")
+	public PostupakPripreme getPostupakPripremeById(@PathVariable int id) {
+		return postupakPripremeService.getPostupakPripremeById(id);
+	}
+	
+	@RequestMapping("/postupciPripreme/recept/{id}")
+	public List<PostupakPripreme> getAllPostupciPripremeByReceptId(@PathVariable int id) {
+		return postupakPripremeService.getAllPostupciPripremeByReceptId(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/postupciPripreme/{id}")
+	public void addPostupakPripreme(@PathVariable int id, @RequestBody PostupakPripreme postupakPripreme, @RequestHeader(name="authorization") String header) {
+		postupakPripremeService.addPostupakPripreme(id, postupakPripreme, header);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/postupciPripreme")
+	public void updatePostupakPripreme(@RequestBody PostupakPripreme postupakPripreme) {
+		postupakPripremeService.updatePostupakPripreme(postupakPripreme);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/postupciPripreme/{id}")
+	public void deletePostupakPripremeById(@PathVariable int id,  @RequestHeader(name="authorization") String header) {
+		postupakPripremeService.deletePostupakPripremeById(id, header);
+	}
+
+}

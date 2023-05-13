@@ -1,0 +1,33 @@
+package local.rps.grupa_jela_recepta;
+
+import local.rps.grupa_jela.GrupaJela;
+import local.rps.recept.Recept;
+
+public class GrupaJelaReceptaDto {
+	private GrupaJela grupaJela;
+	private Recept recept;
+	
+	public GrupaJelaReceptaDto(GrupaJela grupaJela, Recept recept) {
+		super();
+		this.grupaJela = grupaJela;
+		this.recept = recept;
+	}
+
+	public GrupaJela getGrupaJela() {
+		return grupaJela;
+	}
+
+	public void setGrupaJela(GrupaJela grupaJela) {
+		this.grupaJela = grupaJela;
+	}
+
+	public Recept getRecept() {
+		return recept;
+	}
+
+	public void setRecept(Recept recept) {
+		this.recept = recept;
+	}
+	
+	
+}

@@ -1,0 +1,303 @@
+#slika-profila {
+    width:35px;
+    height:35px;
+    border-radius: 100%;
+}
+.obavjestenje {
+    display:inline-flex;
+    width:600px;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-bottom: 1px solid gray;
+    padding: 10px;
+}
+
+#o-container {
+    display:block;
+    text-align: center;
+}
+
+.elem {
+    margin-right: 10px;
+}
+
+#datum {
+    margin-left:10px;
+    color:gray;
+}
+
+#profil{
+    text-align: center;
+}
+
+#slika-prof {
+    width:120px;
+    height:120px;
+    border-radius: 100%;
+    margin-right:40px;
+}
+
+#ime-profil {
+    font-size: 24px;
+    color:rgba(119, 55, 145, 0.877);
+    font-weight: 600;
+}
+
+#naslov {
+    display:inline-flex;
+    width:600px;
+    align-content: center;
+    align-items: center;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.podgrupa {
+    display:inline-flex;
+    width:500px;
+    margin-bottom:10px;
+    align-content: center;
+    align-items: center;
+}
+
+.info {
+    margin-right: 30px;
+    font-size: 18px;
+}
+
+#podesavanja {
+    margin-left:20px;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    border: 1px solid rgba(119, 55, 145, 0.877);
+    font-size: 16px;
+    font-weight: 600;
+    width: 120px;
+    height: 35px;
+    color: rgba(119, 55, 145, 0.877);
+}
+
+
+#podnaslov {
+    display:inline-flex;
+    width:950px;
+    margin-bottom:20px;
+}
+
+.divovi {
+    text-align: center;
+    color: rgba(27, 27, 27, 0.877);
+    font-size: 20px;
+    font-weight:450;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width:450px;
+    padding:7px;
+}
+
+.divovi:hover {
+    background-color:rgb(233, 233, 233);
+}
+
+.slicica {
+    height:100px;
+    width:150px;
+}
+#div-slike {
+    width:300px;
+    height:200px;
+    margin-bottom:15px;
+}
+
+.kolekcija {
+    text-align: center;
+    width:300px;
+    height:250px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-right: 20px;
+}
+
+#kolekcije-div {
+    display:inline-flex;
+    width:950px;
+}
+
+.sastojci {
+    width:800px;
+    margin-left:20%;
+    margin-bottom:10px;
+}
+
+.prikaz-el {
+    width:250px;
+    background-color: whitesmoke;
+    margin-left:51.5%;
+    margin-bottom:10px;
+    margin-top:-20px;
+    position:absolute;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+    padding:5px;
+}
+
+#dodaj-recept {
+    text-align:center;
+}
+
+#prvi-dio {
+    display:inline-flex;
+    margin-bottom:10px;
+}
+
+
+.naslovi {
+    font-size:20px;
+    color: rgba(119, 55, 145, 0.877);
+    font-weight: 600;
+    margin-right:10px;
+    margin-bottom:10px;
+}
+
+.inputi-prvi {
+    height:30px;
+    width: 250px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    font-size: 18px;
+    margin-right:30px;
+}
+
+.inputi-drugi {
+    height:30px;
+    width: 100px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    font-size: 18px;
+    margin-right:30px;
+}
+
+#grupe-jela {
+    display:inline-flex;
+}
+
+.gj-labele {
+    font-size: 18px;
+    color: rgb(95, 95, 95);
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.gj-chcbox {
+    height:20px;
+    width:20px;
+    margin-right: 20px;
+}
+
+#treci-dio {
+    margin-bottom:20px;
+}
+
+#cetvrti-dio {
+    margin-bottom:20px;
+}
+
+.kolicine {
+    height:30px;
+    width: 150px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    font-size: 18px;
+    margin-right:10px;
+}
+
+#peti-dio-pod {
+    display: inline-flex;
+    width:500px;
+}
+
+#peti-dio {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding:10px;
+    background-color: rgb(221, 218, 221);
+    text-align: center;
+    margin-bottom:30px;
+    border-radius:12px;
+}
+.plus {
+    width:120px;
+    height:30px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(146, 92, 146);
+    color:whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-left:450px;
+}
+
+.ta {
+    width:600px;
+    height:100px;
+    margin-left:70px;
+    resize:none;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+#tag-div {
+    margin-bottom:10px;
+}
+
+#sedmi-dio {
+    margin-bottom:50px;
+}
+
+.prikaz-el2 {
+    width:250px;
+    background-color: whitesmoke;
+    margin-left:34.5%;
+    margin-top:-20px;
+    position:absolute;
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+    padding:5px;
+}
+
+#dugme-objavi {
+    width:200px;
+    height:35px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(165, 97, 165);
+    color:whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.pripr-div {
+    margin-bottom:20px;
+}
+
+.prep-sastojci {
+    border:none;
+    width:250px;
+    padding:5px;
+}
+
+.prep-sastojci:hover {
+    background: rgb(219, 218, 218);
+}
+
+.dodaj-kol {
+    width:100px;
+    height:35px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgb(190, 190, 190);
+    color:whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    font-size: 18px;
+}

@@ -1,0 +1,85 @@
+package local.rps.korisnik;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Service
+public class KorisnikService {
+
+	@Autowired
+	KorisnikRepository korisnikRepository;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+	public KorisnikService() {
+	}
+
+	public List<Korisnik> getAllKorisnici() {
+		return this.korisnikRepository.findAll();
+	}
+	
+	public Korisnik getKorisnikById(int id) {
+		return this.korisnikRepository.findById(id).get();
+	}
+	
+	public List<Korisnik> getKorisnikByEmail(String email) {
+		return this.korisnikRepository.findByEmail(email);
+	}
+	
+	public boolean jeDostupan(String email) {
+		return this.korisnikRepository.findByEmail(email).size()==0;
+	}
+	
+	public Resp addKorisnik(Korisnik korisnik) {
+		if(!jeDostupan(korisnik.getEmail())) {
+			korisnik.setLozinka(passwordEncoder.encode(korisnik.getLozinka()));
+			Korisnik k = this.korisnikRepository.save(korisnik);
+			
+			Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            String access_token = JWT.create()
+                    .withSubject(Integer.toString(k.getId()))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                    .sign(algorithm);
+
+            return new Resp(k, access_token);
+		}
+		return null;
+	}
+	
+	public Resp loginKorisnik(Korisnik korisnik) {
+		List<Korisnik> k = getKorisnikByEmail(korisnik.getEmail());
+		if(k.size()>0 && passwordEncoder.matches(korisnik.getLozinka(), k.get(0).getLozinka())) {
+			Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            String access_token = JWT.create()
+                    .withSubject(Integer.toString(k.get(0).getId()))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                    .sign(algorithm);
+            
+            return new Resp(k.get(0), access_token);
+		}
+		return null;
+	}
+	
+	public void updateKorisnik(Korisnik korisnik) {
+		this.korisnikRepository.save(korisnik);
+	}
+	
+	public void deleteKorisnikById(int id) {
+		Korisnik s = this.getKorisnikById(id);
+		this.korisnikRepository.delete(s);
+	}
+
+
+}

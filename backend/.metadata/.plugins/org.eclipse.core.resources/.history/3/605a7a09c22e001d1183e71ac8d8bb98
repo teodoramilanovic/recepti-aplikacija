@@ -1,0 +1,42 @@
+package local.rps.tag;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TagService {
+
+	@Autowired
+	TagRepository tagRepository;
+
+	public TagService() {
+	}
+
+	public List<Tag> getAllTagovi() {
+		return this.tagRepository.findAll();
+	}
+	
+	public Tag getTagById(int id) {
+		return this.tagRepository.findById(id).get();
+	}
+	
+	public void addTag(Tag tag) {
+		this.tagRepository.save(tag);
+	}
+	
+	public void updateTag(Tag tag) {
+		this.tagRepository.save(tag);
+	}
+	
+	public void deleteTagById(int id) {
+		Tag s = this.getTagById(id);
+		this.tagRepository.delete(s);
+	}
+
+	public List<Tag> getAllTagoviByNaziv(String naziv) {
+		return this.tagRepository.getAllTagoviByNaziv(naziv);
+	}
+
+}

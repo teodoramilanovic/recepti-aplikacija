@@ -1,0 +1,61 @@
+package local.rps.omiljen_recept;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.kolekcija.Kolekcija;
+import local.rps.recept.Recept;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class OmiljenReceptController {
+	
+	@Autowired
+	OmiljenReceptService omiljenReceptService;
+
+	@RequestMapping("/omiljeniRecepti")
+	public List<OmiljenRecept> getAllOmiljeniRecepti() {
+		return omiljenReceptService.getAllOmiljeniRecepti();
+	}
+	
+	@RequestMapping("/omiljeniRecepti/{id}")
+	public OmiljenRecept getOmiljenReceptById(@PathVariable int id) {
+		return omiljenReceptService.getOmiljenReceptById(id);
+	}
+	
+	@RequestMapping("/omiljeniRecepti/recept/{id}")
+	public List<OmiljenRecept> getAllOmiljeniReceptiByReceptId(@PathVariable int id) {
+		return omiljenReceptService.getAllOmiljeniReceptiByReceptId(id);
+	}
+	
+	@RequestMapping("/omiljeniRecepti/kolekcija/{id}")
+	public List<OmiljenRecept> getAllOmiljeniReceptiByKolekcijaId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return omiljenReceptService.getAllOmiljeniReceptiByKolekcijaId(id, header);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/omiljeniRecepti/{id1}/{id2}")
+	public void addOmiljenRecept(@PathVariable int id1, @PathVariable int id2, @RequestBody OmiljenRecept omiljenRecept) {
+		omiljenRecept.setRecept(new Recept(id1, "", 0, "", 0, null, null, ""));
+		omiljenRecept.setKolekcija(new Kolekcija(id2, "", null));
+		omiljenReceptService.addOmiljenRecept(omiljenRecept);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/omiljeniRecepti")
+	public void updateOmiljenRecept(@RequestBody OmiljenRecept omiljenRecept) {
+		omiljenReceptService.updateOmiljenRecept(omiljenRecept);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/omiljeniRecepti/{id}")
+	public void deleteOmiljenReceptById(@PathVariable int id) {
+		omiljenReceptService.deleteOmiljenReceptById(id);
+	}
+
+}

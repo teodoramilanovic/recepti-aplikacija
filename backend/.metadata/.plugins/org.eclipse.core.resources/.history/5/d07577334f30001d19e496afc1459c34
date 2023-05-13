@@ -1,0 +1,59 @@
+package local.rps.grupa_jela_recepta;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import local.rps.grupa_jela.GrupaJela;
+import local.rps.recept.Recept;
+
+@Entity
+public class GrupaJelaRecepta {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@ManyToOne
+	private GrupaJela grupaJela;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gj_recept")
+	private Recept recept;
+	
+	public GrupaJelaRecepta(int id, GrupaJela grupaJela, Recept recept) {
+		super();
+		this.id = id;
+		this.grupaJela = grupaJela;
+		this.recept = recept;
+	}
+	
+	public GrupaJelaRecepta() {}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public GrupaJela getGrupaJela() {
+		return grupaJela;
+	}
+
+	public void setGrupaJela(GrupaJela grupaJela) {
+		this.grupaJela = grupaJela;
+	}
+
+	public Recept getRecept() {
+		return recept;
+	}
+
+	public void setRecept(Recept recept) {
+		this.recept = recept;
+	}
+	
+	
+}

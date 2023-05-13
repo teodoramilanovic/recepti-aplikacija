@@ -1,0 +1,42 @@
+package local.rps.postupak_pripreme;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PostupakPripremeService {
+
+	@Autowired
+	PostupakPripremeRepository postupakPripremeRepository;
+
+	public PostupakPripremeService() {
+	}
+
+	public List<PostupakPripreme> getAllPostupciPripreme() {
+		return this.postupakPripremeRepository.findAll();
+	}
+	
+	public PostupakPripreme getPostupakPripremeById(int id) {
+		return this.postupakPripremeRepository.findById(id).get();
+	}
+	
+	public List<PostupakPripreme> getAllPostupciPripremeByReceptId(int id) {
+		return this.postupakPripremeRepository.findByReceptId(id);
+	}
+	
+	public void addPostupakPripreme(PostupakPripreme postupakPripreme, String header) {
+		this.postupakPripremeRepository.save(postupakPripreme);
+	}
+	
+	public void updatePostupakPripreme(PostupakPripreme postupakPripreme) {
+		this.postupakPripremeRepository.save(postupakPripreme);
+	}
+	
+	public void deletePostupakPripremeById(int id, String header) {
+		PostupakPripreme s = this.getPostupakPripremeById(id);
+		this.postupakPripremeRepository.delete(s);
+	}
+
+}

@@ -1,0 +1,50 @@
+package local.rps.grupa_jela_recepta;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class GrupaJelaReceptaService {
+
+	@Autowired
+	GrupaJelaReceptaRepository grupaJelaReceptaRepository;
+
+	public GrupaJelaReceptaService() {
+	}
+
+	public List<GrupaJelaRecepta> getAllGrupeJelaRecepta() {
+		return this.grupaJelaReceptaRepository.findAll();
+	}
+	
+	public GrupaJelaRecepta getGrupaJelaReceptaById(int id) {
+		return this.grupaJelaReceptaRepository.findById(id).get();
+	}
+	
+	public void addGrupaJelaRecepta(GrupaJelaRecepta grupaJelaRecepta) {
+		this.grupaJelaReceptaRepository.save(grupaJelaRecepta);
+	}
+	
+	public void updateGrupaJelaRecepta(GrupaJelaRecepta grupaJelaRecepta) {
+		this.grupaJelaReceptaRepository.save(grupaJelaRecepta);
+	}
+	
+	public void deleteGrupaJelaReceptaById(int id) {
+		GrupaJelaRecepta s = this.getGrupaJelaReceptaById(id);
+		this.grupaJelaReceptaRepository.delete(s);
+	}
+
+	public void deleteGrupaJelaReceptaByReceptId(int id) {
+		this.grupaJelaReceptaRepository.deleteByReceptId(id);
+	}
+
+	public List<GrupaJelaRecepta> getGrupaJelaReceptaByGrupaJelaId(int id) {
+		return this.grupaJelaReceptaRepository.findByGrupaJelaId(id);
+	}
+
+	public List<GrupaJelaRecepta> getGrupaJelaReceptaByGJiTP(int id, String tezina) {
+		return this.grupaJelaReceptaRepository.findByGJiTP(id,tezina);
+	}
+
+}

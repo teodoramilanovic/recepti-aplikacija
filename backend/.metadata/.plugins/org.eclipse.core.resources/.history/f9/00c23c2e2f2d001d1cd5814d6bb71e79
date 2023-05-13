@@ -1,0 +1,29 @@
+package local.rps.korisnik;
+import java.util.ArrayList;
+
+import local.rps.recept.Recept;
+
+public class KorisnikDetails {
+	private int id;
+	private String ime, prezime;
+	private String pol;
+	private String korisnickoIme, email, lozinka;
+	private String avatar;
+	private int brojPratioci;
+	private int brojPrati;
+	private ArrayList<Recept> recepti;
+	
+	public KorisnikDetails(Korisnik k) {
+		super();
+		this.id = k.getId();
+		this.ime = k.getIme();
+		this.prezime = k.getPrezime();
+		this.pol = k.getPol();
+		this.korisnickoIme = k.getKorisnickoIme();
+		this.email = k.getEmail();
+		this.lozinka = k.getLozinka();
+		this.avatar = k.getAvatar();
+	}
+	
+	
+}

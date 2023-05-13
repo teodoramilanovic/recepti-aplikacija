@@ -1,0 +1,55 @@
+package local.rps.grupa_jela_recepta;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.grupa_jela.GrupaJela;
+import local.rps.recept.Recept;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class GrupaJelaReceptaController {
+	
+	@Autowired
+	GrupaJelaReceptaService grupaJelaReceptaService;
+
+	@RequestMapping("/grupeJelaRecepta")
+	public List<GrupaJelaRecepta> getAllGrupeJelaRecepta() {
+		return grupaJelaReceptaService.getAllGrupeJelaRecepta();
+	}
+	
+	@RequestMapping("/grupeJelaRecepta/{id}")
+	public GrupaJelaRecepta getGrupaJelaReceptaById(@PathVariable int id) {
+		return grupaJelaReceptaService.getGrupaJelaReceptaById(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/grupeJelaRecepta")
+	public void addGrupaJelaRecepta(@RequestBody GrupaJelaReceptaDto gjr) {
+		GrupaJelaRecepta grupaJelaRecepta = new GrupaJelaRecepta();
+		grupaJelaRecepta.setGrupaJela(new GrupaJela(gjr.getGrupaJelaId(), ""));
+		grupaJelaRecepta.setRecept(new Recept(gjr.getReceptId(), "", 0, "", 0, null, null, ""));
+		grupaJelaReceptaService.addGrupaJelaRecepta(grupaJelaRecepta);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/grupeJelaRecepta")
+	public void updateGrupaJelaRecepta(@RequestBody GrupaJelaRecepta grupaJelaRecepta) {
+		grupaJelaReceptaService.updateGrupaJelaRecepta(grupaJelaRecepta);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/grupeJelaRecepta/{id}")
+	public void deleteGrupaJelaReceptaById(@PathVariable int id) {
+		grupaJelaReceptaService.deleteGrupaJelaReceptaById(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/grupeJelaRecepta/{id}")
+	public void deleteGrupaJelaReceptaByReceptId(@PathVariable int id) {
+		grupaJelaReceptaService.deleteGrupaJelaReceptaByReceptId(id);
+	}
+}

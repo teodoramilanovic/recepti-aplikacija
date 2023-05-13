@@ -1,0 +1,13 @@
+package local.rps.korisnik
+
+import com.example.artsbackend.users.Users;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Resp {
+
+    private Korisnik result;
+    private String token;
+}

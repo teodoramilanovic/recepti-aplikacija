@@ -1,0 +1,54 @@
+package local.rps.obavjestenje;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.korisnik.Korisnik;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class ObavjestenjeController {
+	
+	@Autowired
+	ObavjestenjeService obavjestenjeService;
+
+	@RequestMapping("/obavjestenja")
+	public List<Obavjestenje> getAllObavjestenja(@RequestHeader(name="authorization") String header) {
+		return obavjestenjeService.getAllObavjestenja(header);
+	}
+	
+	@RequestMapping("/obavjestenja/{id}")
+	public Obavjestenje getObavjestenjeById(@PathVariable int id) {
+		return obavjestenjeService.getObavjestenjeById(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/obavjestenja")
+	public void addObavjestenje(@RequestBody ObavjestenjeDto o) {
+		Obavjestenje obavjestenje=new Obavjestenje();
+		obavjestenje.setAktivniKorisnik(new Korisnik(o.getAktivniKorisnikid(), "", "", "", "", "", "", ""));
+		obavjestenje.setPasivniKorisnik(new Korisnik(o.getPasivniKorisnikId(), "", "", "", "", "", "", ""));
+		obavjestenje.setDatum(new Timestamp(System.currentTimeMillis()));
+		obavjestenje.setOpis(o.getOpis());
+		obavjestenjeService.addObavjestenje(obavjestenje);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/obavjestenja")
+	public void updateObavjestenje(@RequestBody Obavjestenje obavjestenje) {
+		obavjestenjeService.updateObavjestenje(obavjestenje);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/obavjestenja/{id}")
+	public void deleteObavjestenjeById(@PathVariable int id) {
+		obavjestenjeService.deleteObavjestenjeById(id);
+	}
+
+}

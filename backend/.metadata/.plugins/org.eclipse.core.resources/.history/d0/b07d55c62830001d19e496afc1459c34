@@ -1,0 +1,33 @@
+package local.rps.grupa_jela_recepta;
+
+import local.rps.grupa_jela.GrupaJela;
+import local.rps.recept.Recept;
+
+public class GrupaJelaReceptaDto {
+	private int grupaJelaId;
+	private int receptId;
+	
+	public GrupaJelaReceptaDto(int grupaJelaId, int receptId) {
+		super();
+		this.grupaJelaId = grupaJelaId;
+		this.receptId = receptId;
+	}
+
+	public int getGrupaJelaId() {
+		return grupaJelaId;
+	}
+
+	public void setGrupaJelaId(int grupaJelaId) {
+		this.grupaJelaId = grupaJelaId;
+	}
+
+	public int getReceptId() {
+		return receptId;
+	}
+
+	public void setReceptId(int receptId) {
+		this.receptId = receptId;
+	}
+	
+	
+}

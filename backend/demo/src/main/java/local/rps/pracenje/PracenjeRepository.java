@@ -1,0 +1,24 @@
+package local.rps.pracenje;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+public interface PracenjeRepository extends JpaRepository <Pracenje, Integer> {
+
+	public List<Pracenje> findByPasivniKorisnikId(int id);
+
+	public List<Pracenje> findByAktivniKorisnikId(int id);
+	
+	@Query("FROM Pracenje WHERE aktivni_korisnik_id=?1 AND pasivni_korisnik_id=?2")
+	public List<Pracenje> postojiPracenje(int decodedId, int id);
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Pracenje WHERE aktivni_korisnik_id=?1 AND pasivni_korisnik_id=?2")
+	public void deleteByIds(int aki, int pki);
+}
+

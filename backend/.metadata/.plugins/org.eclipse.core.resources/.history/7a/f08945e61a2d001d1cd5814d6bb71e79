@@ -1,0 +1,5 @@
+package local.rps.komentar;
+
+public class KomentarDto {
+
+}

@@ -1,0 +1,59 @@
+package local.rps.komentar;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.korisnik.Korisnik;
+import local.rps.recept.Recept;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class KomentarController {
+	
+	@Autowired
+	KomentarService komentarService;
+
+	@RequestMapping("/komentari")
+	public List<Komentar> getAllKomentari() {
+		return komentarService.getAllKomentari();
+	}
+	
+	@RequestMapping("/komentari/{id}")
+	public Komentar getKomentarById(@PathVariable int id) {
+		return komentarService.getKomentarById(id);
+	}
+	
+	@RequestMapping("/komentari/recept/{id}")
+	public List<Komentar> getAllKomentariByReceptId(@PathVariable int id) {
+		return komentarService.getAllKomentariByReceptId(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/komentari")
+	public void addKomentar(@RequestBody KomentarDto k) {
+		Komentar komentar=new Komentar();
+		komentar.setKorisnik(new Korisnik(k.getKorisnikId(), "", "", "", "", "", "", ""));
+		komentar.setRecept(new Recept(k.getReceptId(), "", 0, "", 0, null, null, ""));
+		komentar.setDatumObjave(new Timestamp(System.currentTimeMillis()));
+		komentar.setTekst(k.getTekst());
+		komentarService.addKomentar(komentar);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/komentari")
+	public void updateKomentar(@RequestBody Komentar komentar) {
+		komentarService.updateKomentar(komentar);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/komentari/{id}")
+	public void deleteKomentarById(@PathVariable int id) {
+		komentarService.deleteKomentarById(id);
+	}
+
+}

@@ -1,0 +1,74 @@
+package local.rps.recept;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.korisnik.Korisnik;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class ReceptController {
+	
+	@Autowired
+	ReceptService receptService;
+
+	@RequestMapping("/recepti")
+	public List<Recept> getAllRecepti() {
+		return receptService.getAllRecepti();
+	}
+	
+	@RequestMapping("/mojiRecepti")
+	public List<Recept> getMojiRecepti(@RequestHeader(name="authorization") String header) {
+		return receptService.getMojiRecepti(header);
+	}
+	
+	@RequestMapping("/recepti/{id}")
+	public ReceptDetails getReceptById(@PathVariable int id) {
+		return receptService.getReceptById(id);
+	}
+	
+	@RequestMapping("/recepti/korisnik/{id}")
+	public List<Recept> getReceptiByKorisnikId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return receptService.getReceptiByKorisnikId(id);
+	}
+	
+	@RequestMapping("/recepti/trazi/{naziv}")
+	public List<Recept> getAllReceptiByNaziv(@PathVariable String naziv) {
+		return receptService.getAllReceptiByNaziv(naziv);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/recepti/{id}")
+	public void addRecept(@RequestBody Recept recept, @RequestHeader(name="authorization") String header) {
+		receptService.addRecept(recept, header);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/recepti")
+	public void updateRecept(@RequestBody Recept recept) {
+		receptService.updateRecept(recept);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/recepti/{id}")
+	public void deleteReceptById(@PathVariable int id) {
+		receptService.deleteReceptById(id);
+	}
+	
+	@RequestMapping("/recepti/popularni")
+	public List<ReceptDetails> getPopularniRecepti() {
+		return receptService.getPopularniRecepti();
+	}
+	
+	@RequestMapping("/recepti/novi")
+	public List<Recept> getNoviRecepti() {
+		return receptService.getNoviRecepti();
+	}
+	
+}

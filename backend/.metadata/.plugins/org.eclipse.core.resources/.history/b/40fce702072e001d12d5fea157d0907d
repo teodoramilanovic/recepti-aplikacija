@@ -1,0 +1,21 @@
+package local.rps.pracenje;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface PracenjeRepository extends JpaRepository <Pracenje, Integer> {
+
+	public List<Pracenje> findByPasivniKorisnikId(int id);
+
+	public List<Pracenje> findByAktivniKorisnikId(int id);
+	
+	@Query("FROM Pracenje WHERE aktivni_korisnik_id=?1 AND pasivni_korisnik_id=?2")
+	public List<Pracenje> postojiPracenje(int decodedId, int id);
+	
+	@Query("DELETE FROM Pracenje p WHERE p.aktivni_korisnik_id=:aki AND p.pasivni_korisnik_id=:pki")
+	public void deleteByIds(@Param("aki") int aki, @Param("pki") int pki);
+}
+

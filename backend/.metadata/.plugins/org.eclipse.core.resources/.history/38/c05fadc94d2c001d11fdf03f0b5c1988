@@ -1,0 +1,57 @@
+package local.rps.obavjestenje;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.korisnik.Korisnik;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class ObavjestenjeController {
+	
+	@Autowired
+	ObavjestenjeService obavjestenjeService;
+
+	@RequestMapping("/obavjestenja")
+	public List<Obavjestenje> getAllObavjestenja() {
+		return obavjestenjeService.getAllObavjestenja();
+	}
+	
+	@RequestMapping("/obavjestenja/{id}")
+	public Obavjestenje getObavjestenjeById(@PathVariable int id) {
+		return obavjestenjeService.getObavjestenjeById(id);
+	}
+	
+	/*@RequestMapping("/obavjestenja/korisnik/{id}")
+	public List<Obavjestenje> getObavjestenjaByKorisnikId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return obavjestenjeService.getObavjestenjaByKorisnikId(id, header);
+	}*/
+	
+	@RequestMapping(method=RequestMethod.POST, value="/obavjestenja/{id1}/{id2}")
+	public void addObavjestenje(@PathVariable int id1, @PathVariable int id2, @RequestBody Obavjestenje obavjestenje) {
+		obavjestenje.setAktivniKorisnik(new Korisnik(id1, "", "", "", "", "", "", ""));
+		obavjestenje.setPasivniKorisnik(new Korisnik(id2, "", "", "", "", "", "", ""));
+		obavjestenje.setDatum(new Timestamp(System.currentTimeMillis()));
+		obavjestenjeService.addObavjestenje(obavjestenje);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/obavjestenja")
+	public void updateObavjestenje(@RequestBody Obavjestenje obavjestenje) {
+		obavjestenjeService.updateObavjestenje(obavjestenje);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/obavjestenja/{id}")
+	public void deleteObavjestenjeById(@PathVariable int id) {
+		obavjestenjeService.deleteObavjestenjeById(id);
+	}
+
+}

@@ -1,0 +1,15 @@
+package local.rps.obavjestenje;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import local.rps.omiljen_recept.OmiljenRecept;
+
+
+public interface ObavjestenjeRepository extends JpaRepository <Obavjestenje, Integer> {	
+	public List<Obavjestenje> findByPasivniKorisnik(int id);
+}
+

@@ -1,0 +1,5 @@
+package local.rps.omiljen_recept;
+
+public class OmiljenReceptDto {
+
+}

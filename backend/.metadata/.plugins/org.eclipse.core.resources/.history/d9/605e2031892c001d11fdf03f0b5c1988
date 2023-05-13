@@ -1,0 +1,58 @@
+package local.rps.kolekcija;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import local.rps.korisnik.Korisnik;
+
+@Service
+public class KolekcijaService {
+
+	@Autowired
+	KolekcijaRepository kolekcijaRepository;
+
+	public KolekcijaService() {
+	}
+
+	public List<Kolekcija> getAllKolekcije() {
+		return this.kolekcijaRepository.findAll();
+	}
+	
+	public Kolekcija getKolekcijaById(int id) {
+		return this.kolekcijaRepository.findById(id).get();
+	}
+	
+	public void addKolekcija(Kolekcija kolekcija) {
+		this.kolekcijaRepository.save(kolekcija);
+	}
+	
+	public void updateKolekcija(Kolekcija kolekcija) {
+		this.kolekcijaRepository.save(kolekcija);
+	}
+	
+	public void deleteKolekcijaById(int id) {
+		Kolekcija s = this.getKolekcijaById(id);
+		this.kolekcijaRepository.delete(s);
+	}
+
+	public List<Kolekcija> getMojeKolekcije(String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.kolekcijaRepository.findByKorisnikId(Integer.parseInt(decodedId));
+        }	
+		return null;
+	}
+
+}

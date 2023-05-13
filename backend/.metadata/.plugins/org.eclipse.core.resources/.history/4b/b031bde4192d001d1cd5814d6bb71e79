@@ -1,0 +1,6 @@
+package local.rps.pracenje;
+
+public class PracenjeDto {
+	private int aktivniKorisnikId;
+	private int pasivniKorisnikId;
+}

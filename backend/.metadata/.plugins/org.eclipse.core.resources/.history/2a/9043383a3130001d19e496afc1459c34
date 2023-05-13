@@ -1,0 +1,58 @@
+package local.rps.omiljen_recept;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+@Service
+public class OmiljenReceptService {
+
+	@Autowired
+	OmiljenReceptRepository omiljenReceptRepository;
+
+	public OmiljenReceptService() {
+	}
+
+	public List<OmiljenRecept> getAllOmiljeniRecepti() {
+		return this.omiljenReceptRepository.findAll();
+	}
+	
+	public OmiljenRecept getOmiljenReceptById(int id) {
+		return this.omiljenReceptRepository.findById(id).get();
+	}
+	
+	public List<OmiljenRecept> getOmiljeniReceptiByReceptId(int id) {
+		return this.omiljenReceptRepository.findByReceptId(id);
+	}
+	
+	public void addOmiljenRecept(OmiljenRecept omiljenRecept, String header) {
+		this.omiljenReceptRepository.save(omiljenRecept);
+	}
+	
+	public void deleteOmiljenReceptById(int id, String header) {
+		OmiljenRecept s = this.getOmiljenReceptById(id);
+		this.omiljenReceptRepository.delete(s);
+	}
+
+	public List<OmiljenRecept> getOmiljeniReceptiByKolekcijaId(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            return this.omiljenReceptRepository.findByKolekcijaId(id);
+        }	
+		return null;
+	}
+
+	public void deleteOmiljenReceptByReceptId(int id, String header) {
+		this.omiljenReceptRepository.deleteByReceptId(id);
+	}
+
+}

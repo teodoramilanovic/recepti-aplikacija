@@ -1,0 +1,112 @@
+package local.rps.pracenje;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import local.rps.korisnik.Korisnik;
+
+@Service
+public class PracenjeService {
+
+	@Autowired
+	PracenjeRepository pracenjeRepository;
+
+	public PracenjeService() {
+	}
+
+	public List<Pracenje> getAllPracenja() {
+		return this.pracenjeRepository.findAll();
+	}
+	
+	public Pracenje getPracenjeById(int id) {
+		return this.pracenjeRepository.findById(id).get();
+	}
+	
+	public void addPracenje(Pracenje pracenje) {
+		this.pracenjeRepository.save(pracenje);
+	}
+	
+	public void updatePracenje(Pracenje pracenje) {
+		this.pracenjeRepository.save(pracenje);
+	}
+	
+	public void deletePracenjeById(int id) {
+		Pracenje s = this.getPracenjeById(id);
+		this.pracenjeRepository.delete(s);
+	}
+
+	public List<Pracenje> getPratioci(String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.pracenjeRepository.findByPasivniKorisnikId(Integer.parseInt(decodedId));
+        }	
+		return null;
+	}
+	
+	public List<Pracenje> getPrati(String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.pracenjeRepository.findByAktivniKorisnikId(Integer.parseInt(decodedId));
+        }	
+		return null;
+	}
+
+	public List<Pracenje> getPratiociByKorisnikId(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.pracenjeRepository.findByPasivniKorisnikId(id);
+        }	
+		return null;
+	}
+
+	public List<Pracenje> getPratiByKorisnikId(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.pracenjeRepository.findByAktivniKorisnikId(id);
+        }	
+		return null;
+	}
+
+	public boolean postojiPracenje(int id, String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            return this.pracenjeRepository.postojiPracenje(Integer.parseInt(decodedId), id).size()>0;
+        }	
+		return false;
+	}
+
+	public void deletePracenjeByIds(PracenjeDto p) {
+		int aki = p.getAktivniKorisnikId();
+		int pki = p.getPasivniKorisnikId();
+		this.pracenjeRepository.deleteByIds(aki,pki);
+	}
+
+}

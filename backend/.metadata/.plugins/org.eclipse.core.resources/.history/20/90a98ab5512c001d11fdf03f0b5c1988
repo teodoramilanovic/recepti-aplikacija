@@ -1,0 +1,52 @@
+package local.rps.obavjestenje;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+@Service
+public class ObavjestenjeService {
+
+	@Autowired
+	ObavjestenjeRepository obavjestenjeRepository;
+
+	public ObavjestenjeService() {
+	}
+
+	public List<Obavjestenje> getAllObavjestenja(String header) {
+		if(header != null && header.startsWith("Bearer ")) {
+            String token = header.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            String decodedId = decodedJWT.getSubject();
+            System.out.println(decodedId);
+            return obavjestenjeRepository.findByPasivniKorisnikId(Integer.parseInt(decodedId));
+        }
+        return null;
+	}
+	
+	public Obavjestenje getObavjestenjeById(int id) {
+		return this.obavjestenjeRepository.findById(id).get();
+	}
+	
+	public void addObavjestenje(Obavjestenje obavjestenje) {
+		this.obavjestenjeRepository.save(obavjestenje);
+	}
+	
+	public void updateObavjestenje(Obavjestenje obavjestenje) {
+		this.obavjestenjeRepository.save(obavjestenje);
+	}
+	
+	public void deleteObavjestenjeById(int id) {
+		Obavjestenje s = this.getObavjestenjeById(id);
+		this.obavjestenjeRepository.delete(s);
+	}
+
+}

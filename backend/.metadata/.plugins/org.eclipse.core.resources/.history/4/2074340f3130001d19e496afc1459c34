@@ -1,0 +1,57 @@
+package local.rps.omiljen_recept;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import local.rps.kolekcija.Kolekcija;
+import local.rps.recept.Recept;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class OmiljenReceptController {
+	
+	@Autowired
+	OmiljenReceptService omiljenReceptService;
+	
+	@RequestMapping("/omiljeniRecepti/{id}")
+	public OmiljenRecept getOmiljenReceptById(@PathVariable int id) {
+		return omiljenReceptService.getOmiljenReceptById(id);
+	}
+	
+	@RequestMapping("/omiljeniRecepti/recept/{id}")
+	public List<OmiljenRecept> getOmiljeniReceptiByReceptId(@PathVariable int id) {
+		return omiljenReceptService.getOmiljeniReceptiByReceptId(id);
+	}
+	
+	@RequestMapping("/omiljeniRecepti/kolekcija/{id}")
+	public List<OmiljenRecept> getOmiljeniReceptiByKolekcijaId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		return omiljenReceptService.getOmiljeniReceptiByKolekcijaId(id, header);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/omiljeniRecepti")
+	public void addOmiljenRecept(@RequestBody OmiljenReceptDto or, @RequestHeader(name="authorization") String header) {
+		OmiljenRecept omiljenRecept=new OmiljenRecept();
+		omiljenRecept.setRecept(new Recept(or.getReceptId(), "", 0, "", 0, null, null, ""));
+		omiljenRecept.setKolekcija(new Kolekcija(or.getKolekcijaId(), "", null));
+		omiljenReceptService.addOmiljenRecept(or, header);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/omiljeniRecepti/{id}")
+	public void deleteOmiljenReceptById(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		omiljenReceptService.deleteOmiljenReceptById(id, header);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/omiljeniRecepti/recept/{id}")
+	public void deleteOmiljenReceptByReceptId(@PathVariable int id, @RequestHeader(name="authorization") String header) {
+		omiljenReceptService.deleteOmiljenReceptByReceptId(id, header);
+	}
+
+}
